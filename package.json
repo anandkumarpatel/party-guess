@@ -1,5 +1,6 @@
 {
   "name": "heads-up",
+  "homepage": "https://headsup.anandkumarpatel.com",
   "version": "1.0.0",
   "description": "",
   "keywords": [],
@@ -18,6 +19,8 @@
     "sass": "^1.60.0"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "DANGEROUSLY_DISABLE_HOST_CHECK=true react-scripts start",
     "build": "react-scripts build",
     "dev": "concurrently --kill-others \"npm run build\" && firebase serve",
@@ -33,5 +36,8 @@
     "not ie <= 11",
     "not op_mini all"
   ],
-  "proxy": "http://localhost:8080"
+  "proxy": "http://localhost:8080",
+  "devDependencies": {
+    "gh-pages": "^5.0.0"
+  }
 }
