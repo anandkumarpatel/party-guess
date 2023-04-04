@@ -20,7 +20,7 @@
     border: 0;
     padding: 8px 12px;
     display: flex;
-    font-family: "Staatliches", Arial, Helvetica, sans-serif;
+    font-family: 'Staatliches', Arial, Helvetica, sans-serif;
     box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
     margin: 0;
   }
@@ -44,7 +44,7 @@
     // animation: hidePopup .5s 15s forwards;
 
     &::before {
-      content: "";
+      content: '';
       position: absolute;
       left: 50%;
       bottom: -10px;
@@ -200,7 +200,7 @@
       &--go {
         position: relative;
         &:before {
-          content: "";
+          content: '';
           position: absolute;
           left: 0;
           top: 0;
@@ -208,7 +208,7 @@
           height: 100%;
           opacity: 0.4;
           background-size: cover;
-          background-image: url("images/stars.svg");
+          background-image: url('images/stars.svg');
           background-position: center center;
         }
       }

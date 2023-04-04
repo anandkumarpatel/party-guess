@@ -61,7 +61,7 @@
     border: 0;
 
     &::after {
-      content: "OFF";
+      content: 'OFF';
       position: absolute;
       top: 0;
       left: 0;
@@ -78,7 +78,7 @@
       text-align: center;
     }
     &:checked::after {
-      content: "ON";
+      content: 'ON';
       left: 17px;
     }
     &:focus {
@@ -114,7 +114,7 @@
   }
   &-copy {
     margin: 0.5em 0;
-    font-family: "Helvetica", "Arial", sans-serif;
+    font-family: 'Helvetica', 'Arial', sans-serif;
   }
   &-emphasis {
     font-weight: bold;
