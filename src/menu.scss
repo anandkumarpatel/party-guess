@@ -69,11 +69,6 @@
     font-size: 1.5em;
     line-height: 1;
   }
-  &-logoWrap {
-    position: relative;
-    margin-bottom: 1em;
-    pointer-events: none; // so users can click the help menu
-  }
   &-siteName {
     color: #fff;
     position: absolute;
