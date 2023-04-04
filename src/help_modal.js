@@ -35,7 +35,7 @@ const HelpModal = ({ handleModalClose }) => {
         One player, the guesser, picks a deck and then puts the phone in front of their forehead. The rest of the party has to give the guesser clues of what the current card is
         without saying any words from the card, or saying "it rhymes with." The guesser flips the phone down for correct and up to skip.
       </p>
-      <p className='Modal-copy Modal-emphasis'>To leave a game and return to the menu at any time carefully shake your device.</p>
+      {/* <p className='Modal-copy Modal-emphasis'>To leave a game and return to the menu at any time carefully shake your device.</p> */}
       <h2 className='Modal-title'>FAQS</h2>
       {isIOS && (
         <>

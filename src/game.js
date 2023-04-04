@@ -1,11 +1,11 @@
-import React from 'react'
-import correctSound from './sounds/sound_correct.mp3'
-import skipSound from './sounds/sound_skip.mp3'
-import countdownSoundFile from './sounds/countdown.mp3'
 import cx from 'classnames'
+import React from 'react'
 import { isIOS } from 'react-device-detect'
 import './game.scss'
 import { hash } from './images'
+import countdownSoundFile from './sounds/countdown.mp3'
+import correctSound from './sounds/sound_correct.mp3'
+import skipSound from './sounds/sound_skip.mp3'
 
 const removeUnderscores = (str) => str.replace(/_/g, ' ')
 

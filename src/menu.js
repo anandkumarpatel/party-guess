@@ -66,15 +66,12 @@ class Menu extends Component {
   getCategoryURL = (name) => name.toLowerCase().trim().replace(/\s/g, '-')
 
   render() {
-    const { getActiveCat, categories, user } = this.props
+    const { getActiveCat, categories } = this.props
 
     return (
       <div className='Menu'>
-        {user && user.email && (
-          <div className=''>
-            Welcome, {user.email}! <button onClick={this.logout}>Sign Out</button>
-          </div>
-        )}
+        <div className=''>Play Time!</div>
+        <div className=''>Select a deck to play</div>
         <div className='Menu-board'>
           {this.state.buttons.length &&
             this.state.buttons.length === this.props.categories.length &&

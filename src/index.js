@@ -40,7 +40,6 @@ class App extends React.Component {
     orientation: 'positive',
     blockRotation: false,
     isAnimating: '',
-    user: {},
     isHelpModalOpen: false,
     isSettingsModalOpen: false,
     enableSoundEffects: false,
@@ -463,7 +462,6 @@ class App extends React.Component {
                     <Menu
                       getActiveCat={this.getActiveCat}
                       categories={this.state.categories}
-                      user={this.state.user}
                       countdownSound={COUNTDOWN_SOUND}
                       soundFile={SOUND_FILE}
                       enableSoundEffects={this.state.enableSoundEffects}
