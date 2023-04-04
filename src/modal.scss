@@ -17,7 +17,7 @@
     position: absolute;
     top: 12px;
     left: 0;
-    background: hsla(0,0%,100%,.85);
+    background: hsla(0, 0%, 100%, 0.85);
     color: #1789fc;
     border: 0;
     padding: 3px 12px;
@@ -27,8 +27,8 @@
     justify-content: center;
     align-items: center;
     border-radius: 0 5px 5px 0;
-    font-family: Staatliches,Arial,Helvetica,sans-serif;
-    box-shadow: 0 0 8px rgba(0,0,0,.1);
+    font-family: Staatliches, Arial, Helvetica, sans-serif;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
     font-size: 2em;
 
     &--right {
@@ -71,8 +71,8 @@
       width: 20px;
       line-height: 20px;
       height: 20px;
-      -webkit-transition: left .25s;
-      transition: left .25s;
+      -webkit-transition: left 0.25s;
+      transition: left 0.25s;
       color: #296eb4;
       font-family: Staatliches;
       text-align: center;
@@ -94,7 +94,7 @@
     font-weight: normal;
     font-size: 2em;
     text-align: center;
-    margin: 0 0 .75em;
+    margin: 0 0 0.75em;
 
     &:not(:first-child) {
       margin-top: 1em;
@@ -113,7 +113,7 @@
     margin-right: 8px;
   }
   &-copy {
-    margin: .5em 0;
+    margin: 0.5em 0;
     font-family: "Helvetica", "Arial", sans-serif;
   }
   &-emphasis {

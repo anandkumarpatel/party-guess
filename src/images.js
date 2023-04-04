@@ -177,5 +177,5 @@ export const hash = {
   vidia: vidia,
   winnie_the_pooh: winnie_the_pooh,
   woody: woody,
-  zasu: zasu
+  zasu: zasu,
 };

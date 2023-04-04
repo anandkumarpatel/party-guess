@@ -5,13 +5,18 @@ import Menu from "./menu";
 import Game from "./game";
 import LoadingIcon from "./loading_icon";
 import { BrowserRouter as Router, Route } from "react-router-dom";
-import { ReactComponent as Gear } from './images/gear.svg';
-import HelpModal from './help_modal';
-import SettingsModal from './settings_modal';
+import { ReactComponent as Gear } from "./images/gear.svg";
+import HelpModal from "./help_modal";
+import SettingsModal from "./settings_modal";
 import "./app.scss";
-import * as serviceWorker from './serviceWorker';
-import { isIOS, isMobile, isMobileSafari, osVersion } from "react-device-detect";
-import names from './names';
+import * as serviceWorker from "./serviceWorker";
+import {
+  isIOS,
+  isMobile,
+  isMobileSafari,
+  osVersion,
+} from "react-device-detect";
+import names from "./names";
 
 const DEFAULT_GAME_TIMER = 60;
 const START_TIMER = 3;
@@ -48,7 +53,7 @@ class App extends React.Component {
     showInstallMessage: false,
     logLastItemAsSkipped: true,
     deviceOrientationPermission: false,
-    deviceMotionPermission: false
+    deviceMotionPermission: false,
   };
 
   async componentDidMount() {
@@ -63,17 +68,17 @@ class App extends React.Component {
 
     window.addEventListener("orientationchange", this.onOrientationChange);
 
-    if (typeof DeviceOrientationEvent.requestPermission !== 'function') {
+    if (typeof DeviceOrientationEvent.requestPermission !== "function") {
       window.addEventListener(
         "deviceorientation",
-        event => {
+        (event) => {
           this.onDeviceOrientation(event);
         },
         true
       );
     }
 
-    window.addEventListener("devicemotion", event => {
+    window.addEventListener("devicemotion", (event) => {
       this.onDeviceMotion(event);
     });
   }
@@ -86,71 +91,81 @@ class App extends React.Component {
 
   componentWillUnmount() {
     window.removeEventListener("orientationchange", this.onOrientationChange);
-    if (typeof DeviceOrientationEvent.requestPermission !== 'function') {
+    if (typeof DeviceOrientationEvent.requestPermission !== "function") {
       window.removeEventListener(
         "deviceorientation",
-        event => {
+        (event) => {
           this.onDeviceOrientation(event);
         },
         true
       );
     }
 
-    window.removeEventListener("devicemotion", event => {
+    window.removeEventListener("devicemotion", (event) => {
       this.onDeviceMotion(event);
     });
   }
 
   getDeviceOrientationPermission = () => {
-    if (typeof DeviceOrientationEvent.requestPermission === 'function' && !this.state.deviceOrientationPermission) {
+    if (
+      typeof DeviceOrientationEvent.requestPermission === "function" &&
+      !this.state.deviceOrientationPermission
+    ) {
       DeviceOrientationEvent.requestPermission()
-      .then(response => {
-        if (response == 'granted') {
-          this.setState({deviceOrientationPermission: true});
-          window.addEventListener(
-            "deviceorientation",
-            event => {
-              this.onDeviceOrientation(event);
-            },
-            true
-          );
-        } else {
-          alert('You will not be able to play this game without allowing this. Please clear browser cache/data and accept again.');
-        }
-      })
-      .catch(error => alert(error));
+        .then((response) => {
+          if (response == "granted") {
+            this.setState({ deviceOrientationPermission: true });
+            window.addEventListener(
+              "deviceorientation",
+              (event) => {
+                this.onDeviceOrientation(event);
+              },
+              true
+            );
+          } else {
+            alert(
+              "You will not be able to play this game without allowing this. Please clear browser cache/data and accept again."
+            );
+          }
+        })
+        .catch((error) => alert(error));
     }
-  }
+  };
 
   getLocalStorageSettings = () => {
-    if (localStorage.getItem('waitup-hasSoundEffects')) {
-      this.setState({ enableSoundEffects: JSON.parse(localStorage.getItem('waitup-hasSoundEffects')) });
+    if (localStorage.getItem("waitup-hasSoundEffects")) {
+      this.setState({
+        enableSoundEffects: JSON.parse(
+          localStorage.getItem("waitup-hasSoundEffects")
+        ),
+      });
     }
-    if (localStorage.getItem('waitup-gameClock')) {
-      const localGameClock = parseInt(localStorage.getItem('waitup-gameClock'));
+    if (localStorage.getItem("waitup-gameClock")) {
+      const localGameClock = parseInt(localStorage.getItem("waitup-gameClock"));
       this.setState({ gameClock: localGameClock, inGameTimer: localGameClock });
     }
-  }
+  };
 
   // Detects if device is in standalone mode
-  isInStandaloneMode = () => ('standalone' in window.navigator) && (window.navigator.standalone);
+  isInStandaloneMode = () =>
+    "standalone" in window.navigator && window.navigator.standalone;
 
   fetchData = async () => {
-    if (localStorage.getItem('waitup-categories') && !navigator.onLine) {
-      const data = JSON.parse(localStorage.getItem('waitup-categories'));
+    if (localStorage.getItem("waitup-categories") && !navigator.onLine) {
+      const data = JSON.parse(localStorage.getItem("waitup-categories"));
       this.onLoad(data);
     } else {
       const API = `https://docs.google.com/spreadsheets/d/1js9kWv1kbrd_LaBrUodI2-zeS320HIrEe4HkpGbQLf8/export?format=csv`;
       const response = await fetch(API);
       const data = await response.text();
-      console.log(data)
+      console.log(data);
 
       // const data = names
 
-      localStorage.setItem('waitup-categories', JSON.stringify(data));
+      localStorage.setItem("waitup-categories", JSON.stringify(data));
       this.onLoad(data);
     }
-  }
+  };
 
   reshuffleDecks = () => {
     if (isIOS && navigator.onLine) {
@@ -160,40 +175,39 @@ class App extends React.Component {
     }
   };
 
-  onLoad = data => {
-    const rows = data.split("\n")
+  onLoad = (data) => {
+    const rows = data.split("\n");
     // remove header
-    rows.shift()
+    rows.shift();
     const finalArray = [];
 
     for (const row of rows) {
-        const finalObj = {};
-        const values = row.split(",");
-        finalObj.name = values[0];
-        finalObj.isLocked = false;
-        finalObj.description = values[2];
-        finalObj.list = new Set([...values.slice(3).filter(i => i)]);
-        finalArray.push(finalObj);
+      const finalObj = {};
+      const values = row.split(",");
+      finalObj.name = values[0];
+      finalObj.isLocked = false;
+      finalObj.description = values[2];
+      finalObj.list = new Set([...values.slice(3).filter((i) => i)]);
+      finalArray.push(finalObj);
     }
 
     this.setState({
       categories: finalArray,
-      activeCollection: finalArray[0]
+      activeCollection: finalArray[0],
     });
   };
 
-  onDeviceMotion = event => {
+  onDeviceMotion = (event) => {
     if (
       (this.state.isStaging || this.state.isGameInProgress) &&
       event.acceleration.x > 30
     ) {
-
       this.resetGame();
       this.backToMenu();
     }
   };
 
-  onDeviceOrientation = event => {
+  onDeviceOrientation = (event) => {
     if (this.state.isGameInProgress) {
       if (Math.abs(event.gamma) <= 30 && !this.state.blockRotation) {
         if (event.gamma < 0) {
@@ -210,12 +224,12 @@ class App extends React.Component {
           }
         }
         this.setState({
-          blockRotation: true
+          blockRotation: true,
         });
       }
       if (Math.abs(event.gamma) >= 70) {
         this.setState({
-          blockRotation: false
+          blockRotation: false,
         });
       }
     }
@@ -241,17 +255,17 @@ class App extends React.Component {
     const newActiveCollection = { ...cat, list: new Set(cat.list) };
 
     this.setState({
-      activeCollection: newActiveCollection
+      activeCollection: newActiveCollection,
     });
 
     this.goToStaging();
   };
 
   onInGameTimerComplete = () => {
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       GAME_COUNTDOWN_INTERVAL = setInterval(() => {
-        this.setState(prevState => ({
-          inGameTimer: prevState.inGameTimer - 1
+        this.setState((prevState) => ({
+          inGameTimer: prevState.inGameTimer - 1,
         }));
         if (this.state.inGameTimer < 1 || this.state.isGameOver) {
           clearInterval(GAME_COUNTDOWN_INTERVAL);
@@ -265,12 +279,15 @@ class App extends React.Component {
     clearInterval(START_COUNTDOWN_INTERVAL);
     clearInterval(GAME_COUNTDOWN_INTERVAL);
     // If times runs out, lets log that active item as skipped
-    if (this.state.activeItem !== undefined && this.state.logLastItemAsSkipped) {
-      this.setState(prevState => ({
+    if (
+      this.state.activeItem !== undefined &&
+      this.state.logLastItemAsSkipped
+    ) {
+      this.setState((prevState) => ({
         finalAnswers: [
           ...prevState.finalAnswers,
-          { name: this.state.activeItem, status: "skip" }
-        ]
+          { name: this.state.activeItem, status: "skip" },
+        ],
       }));
     }
 
@@ -288,8 +305,8 @@ class App extends React.Component {
       isStaging: false,
       isGameOver: false,
       isResults: true,
-      isAnimating: '',
-      logLastItemAsSkipped: true
+      isAnimating: "",
+      logLastItemAsSkipped: true,
     }));
   };
 
@@ -301,7 +318,7 @@ class App extends React.Component {
       isGameInProgress: true,
       isMenu: false,
       isResults: false,
-      isStaging: false
+      isStaging: false,
     });
     this.getNextItem();
     await this.onInGameTimerComplete();
@@ -309,24 +326,23 @@ class App extends React.Component {
     this.resetGame();
   };
 
-  makeDecision = decision => {
+  makeDecision = (decision) => {
     if (decision) {
       // if a decision was made within the last second, don't log the next item as skipped.
       if (this.state.inGameTimer <= 1) {
         this.setState({ logLastItemAsSkipped: false });
       }
-      this.setState(prevState => ({
+      this.setState((prevState) => ({
         finalAnswers: [
           ...prevState.finalAnswers,
-          { name: this.state.activeItem, status: decision }
-        ]
+          { name: this.state.activeItem, status: decision },
+        ],
       }));
       if (decision === "correct") {
-        this.setState(prevState => ({
+        this.setState((prevState) => ({
           score: prevState.score + 1,
-          isAnimating: "correct"
+          isAnimating: "correct",
         }));
-
       } else {
         this.setState({ isAnimating: "skip" });
       }
@@ -345,16 +361,25 @@ class App extends React.Component {
     updatedCollection.delete(randomItem);
 
     const dupCategories = [...this.state.categories];
-    dupCategories.splice(dupCategories.findIndex(x => x.name === this.state.activeCollection.name), 1, { ...this.state.activeCollection, list: updatedCollection });
+    dupCategories.splice(
+      dupCategories.findIndex(
+        (x) => x.name === this.state.activeCollection.name
+      ),
+      1,
+      { ...this.state.activeCollection, list: updatedCollection }
+    );
 
-    this.setState(prevState => ({
+    this.setState((prevState) => ({
       activeItem: randomItem,
-      activeCollection: { ...prevState.activeCollection, list: updatedCollection },
-      categories: dupCategories
+      activeCollection: {
+        ...prevState.activeCollection,
+        list: updatedCollection,
+      },
+      categories: dupCategories,
     }));
   };
 
-  getNextItem = decision => {
+  getNextItem = (decision) => {
     // Don't get a next item if there isn't one
     if (
       this.state.activeItem === undefined &&
@@ -372,11 +397,11 @@ class App extends React.Component {
   };
 
   onStartCountdownComplete = () => {
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       START_COUNTDOWN_INTERVAL = setInterval(() => {
-        this.setState(prevState => ({
+        this.setState((prevState) => ({
           isCountdownInProgress: true,
-          startGameTimer: prevState.startGameTimer - 1
+          startGameTimer: prevState.startGameTimer - 1,
         }));
         if (this.state.startGameTimer < 1) {
           clearInterval(START_COUNTDOWN_INTERVAL);
@@ -392,7 +417,7 @@ class App extends React.Component {
       isResults: false,
       isStaging: false,
       score: 0,
-      finalAnswers: []
+      finalAnswers: [],
     });
   };
 
@@ -403,7 +428,7 @@ class App extends React.Component {
         isResults: false,
         isMenu: false,
         score: 0,
-        finalAnswers: []
+        finalAnswers: [],
       },
       () => {
         this.onOrientationChange();
@@ -416,41 +441,44 @@ class App extends React.Component {
   };
 
   handleHelpModal = () => {
-    this.setState(prevState => {
+    this.setState((prevState) => {
       return { isHelpModalOpen: !prevState.isHelpModalOpen };
     });
-  }
+  };
 
   handleSettingsModal = () => {
-    this.setState(prevState => {
+    this.setState((prevState) => {
       return { isSettingsModalOpen: !prevState.isSettingsModalOpen };
     });
-  }
+  };
 
   handleSoundEffects = () => {
-    this.setState(prevState => {
-      localStorage.setItem('waitup-hasSoundEffects', !prevState.enableSoundEffects);
+    this.setState((prevState) => {
+      localStorage.setItem(
+        "waitup-hasSoundEffects",
+        !prevState.enableSoundEffects
+      );
 
       return { enableSoundEffects: !prevState.enableSoundEffects };
     });
-  }
+  };
 
-  handleGameClock = num => {
-    localStorage.setItem('waitup-gameClock', num);
+  handleGameClock = (num) => {
+    localStorage.setItem("waitup-gameClock", num);
 
     this.setState({ gameClock: num, inGameTimer: num });
-  }
+  };
 
   getBanner = () => {
     if (!isMobile) {
-      return 'Visit us on a mobile or tablet device and add to homescreen to play!';
+      return "Visit us on a mobile or tablet device and add to homescreen to play!";
     }
     if (isIOS && !isMobileSafari && !this.isInStandaloneMode()) {
-      return 'Please visit us in Safari in order to install the app to your Home Screen!';
+      return "Please visit us in Safari in order to install the app to your Home Screen!";
     }
 
     return null;
-  }
+  };
 
   render() {
     return (
@@ -467,8 +495,18 @@ class App extends React.Component {
                     <p className="Menu-banner">{this.getBanner()}</p>
                   )}
                   <div className="Menu-container">
-                    <button className="Menu-helpBtn" onClick={this.handleHelpModal}><i className="Menu-helpIcon">?</i></button>
-                    <button className="Menu-settingsBtn" onClick={this.handleSettingsModal}><Gear className="hey" /></button>
+                    <button
+                      className="Menu-helpBtn"
+                      onClick={this.handleHelpModal}
+                    >
+                      <i className="Menu-helpIcon">?</i>
+                    </button>
+                    <button
+                      className="Menu-settingsBtn"
+                      onClick={this.handleSettingsModal}
+                    >
+                      <Gear className="hey" />
+                    </button>
                     <Menu
                       getActiveCat={this.getActiveCat}
                       categories={this.state.categories}
@@ -476,11 +514,23 @@ class App extends React.Component {
                       countdownSound={COUNTDOWN_SOUND}
                       soundFile={SOUND_FILE}
                       enableSoundEffects={this.state.enableSoundEffects}
-                      getDeviceOrientationPermission={this.getDeviceOrientationPermission}
+                      getDeviceOrientationPermission={
+                        this.getDeviceOrientationPermission
+                      }
                     />
                   </div>
-                  <button className="Results-btn Results-btn--reshuffle" onClick={this.reshuffleDecks}>
-                    <svg className="Results-shuffleIcon" height="512px" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><path d="M370.1,181.3H399v47.3l81-83.2L399,64v54h-28.9c-82.7,0-129.4,61.9-170.6,116.5c-37,49.1-69,95.4-120.6,95.4H32v63.3h46.9  c82.7,0,129.4-65.8,170.6-120.4C286.5,223.7,318.4,181.3,370.1,181.3z M153.2,217.5c3.5-4.6,7.1-9.3,10.7-14.1  c8.8-11.6,18-23.9,28-36.1c-29.6-27.9-65.3-48.5-113-48.5H32v63.3c0,0,13.3-0.6,46.9,0C111.4,182.8,131.8,196.2,153.2,217.5z   M399,330.4h-28.9c-31.5,0-55.7-15.8-78.2-39.3c-2.2,3-4.5,6-6.8,9c-9.9,13.1-20.5,27.2-32.2,41.1c30.4,29.9,67.2,52.5,117.2,52.5  H399V448l81-81.4l-81-83.2V330.4z" /></svg>
+                  <button
+                    className="Results-btn Results-btn--reshuffle"
+                    onClick={this.reshuffleDecks}
+                  >
+                    <svg
+                      className="Results-shuffleIcon"
+                      height="512px"
+                      viewBox="0 0 512 512"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path d="M370.1,181.3H399v47.3l81-83.2L399,64v54h-28.9c-82.7,0-129.4,61.9-170.6,116.5c-37,49.1-69,95.4-120.6,95.4H32v63.3h46.9  c82.7,0,129.4-65.8,170.6-120.4C286.5,223.7,318.4,181.3,370.1,181.3z M153.2,217.5c3.5-4.6,7.1-9.3,10.7-14.1  c8.8-11.6,18-23.9,28-36.1c-29.6-27.9-65.3-48.5-113-48.5H32v63.3c0,0,13.3-0.6,46.9,0C111.4,182.8,131.8,196.2,153.2,217.5z   M399,330.4h-28.9c-31.5,0-55.7-15.8-78.2-39.3c-2.2,3-4.5,6-6.8,9c-9.9,13.1-20.5,27.2-32.2,41.1c30.4,29.9,67.2,52.5,117.2,52.5  H399V448l81-81.4l-81-83.2V330.4z" />
+                    </svg>
                     Reshuffle Decks
                   </button>
                   {this.state.isSettingsModalOpen && (
@@ -523,20 +573,23 @@ class App extends React.Component {
                       {this.state.startGameTimer}
                     </span>
                   ) : (
-                      <>
-                        <span className="Staging-text">Place on forehead
-                          <span className="Staging-smText">Please turn off orientation lock</span>
+                    <>
+                      <span className="Staging-text">
+                        Place on forehead
+                        <span className="Staging-smText">
+                          Please turn off orientation lock
                         </span>
-                      </>
-                    )}
+                      </span>
+                    </>
+                  )}
                 </div>
               )}
             </>
           ) : (
-              <>
-                <LoadingIcon />
-              </>
-            )}
+            <>
+              <LoadingIcon />
+            </>
+          )}
         </div>
       </Router>
     );

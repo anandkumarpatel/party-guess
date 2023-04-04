@@ -2,16 +2,19 @@ import React from "react";
 import cx from "classnames";
 import "./results.scss";
 
-const removeUnderscores = str => str.replace(/_/g, ' ');
+const removeUnderscores = (str) => str.replace(/_/g, " ");
 
-const getName = ({name, activeCollection}) => activeCollection.name.toLowerCase().includes('kids') ? removeUnderscores(name) : name;
+const getName = ({ name, activeCollection }) =>
+  activeCollection.name.toLowerCase().includes("kids")
+    ? removeUnderscores(name)
+    : name;
 
 const Results = ({
   score,
   activeCollection,
   getActiveCat,
   backToMenu,
-  finalAnswers
+  finalAnswers,
 }) => {
   return (
     <div className="Staging">
@@ -21,10 +24,10 @@ const Results = ({
           <li
             key={name}
             className={cx("Results", {
-              "Results--skip": status === "skip"
+              "Results--skip": status === "skip",
             })}
           >
-            {getName({name, activeCollection})}
+            {getName({ name, activeCollection })}
           </li>
         ))}
       </ul>
@@ -33,7 +36,7 @@ const Results = ({
           <button
             className="Results-btn Results-btn--go"
             onClick={() => {
-              getActiveCat({cat: activeCollection});
+              getActiveCat({ cat: activeCollection });
             }}
           >
             Play deck again

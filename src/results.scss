@@ -13,7 +13,7 @@
     width: 25px;
     height: 25px;
     fill: #296eb4;
-    margin-right: .25em;
+    margin-right: 0.25em;
     top: -1px;
     position: relative;
   }
@@ -25,7 +25,7 @@
     background-color: #fff;
     margin: 16px 6px 6px;
     font-size: 2rem;
-    color: #1789FC;
+    color: #1789fc;
     line-height: 1;
     &--go {
       position: relative;
@@ -57,7 +57,7 @@
       align-items: center;
 
       &:focus {
-        background-color: #1789FC;
+        background-color: #1789fc;
         color: #fff;
 
         .Results-shuffleIcon {

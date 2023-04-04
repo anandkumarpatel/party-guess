@@ -8,6 +8,7 @@
   "dependencies": {
     "classnames": "^2.3.2",
     "dotenv": "^16.0.3",
+    "prettier": "^2.8.7",
     "react": "^16.14.0",
     "react-device-detect": "^2.2.3",
     "react-dom": "^16.14.0",
@@ -22,6 +23,7 @@
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
     "start": "DANGEROUSLY_DISABLE_HOST_CHECK=true react-scripts start",
+    "lint": "prettier -w ./src",
     "build": "react-scripts build",
     "dev": "concurrently --kill-others \"npm run build\" && firebase serve",
     "prod": "concurrently --kill-others \"npm run build\" && firebase deploy --only hosting",
