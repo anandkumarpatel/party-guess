@@ -1,4 +1,4 @@
-# Wait Up!
+# Guess!
 
 Check it out on mobile or tablet and add to homescreen: https://waitupgame.com
 

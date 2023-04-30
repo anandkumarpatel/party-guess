@@ -38,9 +38,13 @@ class Game extends React.Component {
     const timer = toMMSS(inGameTimer)
     const statusText = isAnimating === 'correct' ? 'Correct!' : 'Skip!'
 
-    const getActiveItem = () =>
-      activeCollection.name.toLowerCase().includes('kids') ? <img src={hash[activeItem]} alt={removeUnderscores(activeItem)} className='Game-image' /> : activeItem
-
+    const getActiveItem = () => {
+      return activeCollection.name.toLowerCase().includes('kids') ? <img src={hash[activeItem]} alt={removeUnderscores(activeItem)} className='Game-image' /> : activeItem
+    }
+    const style = {}
+    if (activeCollection.name.toLowerCase().includes('emoji')) {
+      style['font-size'] = '12rem'
+    }
     return (
       <>
         <div
@@ -51,7 +55,9 @@ class Game extends React.Component {
           onTransitionEnd={removeAnimationClasses}
         >
           {activeItem !== undefined ? (
-            <div className='Game-activeItem'>{isAnimating !== '' ? statusText : getActiveItem()}</div>
+            <div style={style} className='Game-activeItem'>
+              {isAnimating !== '' ? statusText : getActiveItem()}
+            </div>
           ) : (
             <p>
               Category is empty :( <br /> Carefully shake device to return to menu.
